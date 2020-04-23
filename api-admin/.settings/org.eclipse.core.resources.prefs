@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//conf/dev/application.properties=UTF-8
+encoding//conf/local=UTF-8
+encoding//conf/local/application-defalut.properties=UTF-8
+encoding//conf/local/application-sharemen.properties=UTF-8
+encoding//conf/production/application.properties=UTF-8
+encoding//conf/uat/application.properties=UTF-8
+encoding//src/main/java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/test/java=UTF-8
+encoding/<project>=UTF-8

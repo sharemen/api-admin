@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.s.api.admin.dao.ApiHistoryDao">
+	
+	<resultMap id="ApiHistory" type="org.s.api.admin.core.model.ApiHistory" >
+		<result column="id" property="id" />
+		<result column="document_id" property="documentId" />
+		<result column="oper_time" property="time" />
+		<result column="oper_user" property="user" />
+		<result column="operate" property="operate" />
+
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.id,
+		t.document_id,
+		t.oper_time,
+		t.oper_user,
+		t.operate
+	</sql>
+
+	<insert id="add" parameterType="org.s.api.admin.core.model.ApiHistory" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO api_history (
+			document_id,
+			oper_time,
+			oper_user,
+			operate
+		) VALUES (
+			#{documentId},
+			NOW(),
+			#{user},
+			#{operate}
+		);
+	</insert>
+
+
+	<delete id="delete" parameterType="java.lang.Integer" >
+		DELETE FROM api_history
+		WHERE id = #{id}
+	</delete>
+
+	<select id="load" parameterType="java.lang.Integer" resultMap="ApiHistory">
+		SELECT <include refid="Base_Column_List" />
+		FROM api_history AS t
+		WHERE t.id = #{id}
+	</select>
+
+	<select id="loadByDocumentId"  resultMap="ApiHistory">
+		SELECT <include refid="Base_Column_List" />
+		FROM api_history AS t
+		WHERE t.document_id = #{documentId}
+		ORDER BY t.oper_time asc
+		limit #{size}
+	</select>
+	
+	
+	<select id="selectApiHistory"  resultMap="ApiHistory">
+		SELECT <include refid="Base_Column_List" />
+		FROM api_history AS t
+		WHERE t.document_id = #{documentId}
+		ORDER BY t.oper_time asc
+	</select>
+
+</mapper>

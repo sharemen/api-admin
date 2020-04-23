@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.s.api.admin.dao.IXxlApiMockDao">
+
+	<resultMap id="XxlApiMock" type="org.s.api.admin.core.model.XxlApiMock" >
+		<result column="id" property="id" />
+		<result column="document_id" property="documentId" />
+		<result column="uuid" property="uuid" />
+	    <result column="resp_type" property="respType" />
+		<result column="resp_example" property="respExample" />
+		<result column="req_uri" property="reqUri" />
+		<result column="isdefault" property="isdefault" />
+		<result column="creat_time" property="creatTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.id,
+		t.document_id,
+		t.uuid,
+		t.resp_type,
+		t.resp_example,
+		t.req_uri,
+		t.isdefault,
+		t.creat_time,
+		t.update_time
+	</sql>
+
+	<insert id="add" parameterType="org.s.api.admin.core.model.XxlApiMock" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO api_mock (
+			document_id,
+			uuid,
+			resp_type,
+			resp_example,
+			req_uri,
+			isdefault,
+			creat_time,
+			update_time
+		) VALUES (
+			#{documentId},
+			#{uuid},
+			#{respType},
+			#{respExample},
+			#{reqUri},
+			#{isdefault},
+			now(),
+			now()
+		);
+	</insert>
+
+	<update id="update" parameterType="org.s.api.admin.core.model.XxlApiMock" >
+		UPDATE api_mock
+		SET
+			resp_type = #{respType},
+			resp_example = #{respExample},
+			isdefault = #{isdefault},
+			req_uri = #{reqUri},
+			update_time = now()
+		WHERE id = #{id}
+	</update>
+	
+	<update id="resetDefaultByUri" parameterType="org.s.api.admin.core.model.XxlApiMock" >
+		UPDATE api_mock
+		SET
+			isdefault = 0
+			
+		WHERE req_uri = #{reqUri}
+		and id != #{id}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer" >
+		DELETE FROM api_mock
+		WHERE id = #{id} 
+	</delete>
+
+	<select id="loadAll" parameterType="java.lang.Integer" resultMap="XxlApiMock">
+		SELECT <include refid="Base_Column_List" />
+		FROM api_mock AS t
+		WHERE t.document_id = #{documentId}
+		ORDER BY t.id DESC
+	</select>
+
+	<select id="load" parameterType="java.lang.Integer" resultMap="XxlApiMock">
+		SELECT <include refid="Base_Column_List" />
+		FROM api_mock AS t
+		WHERE t.id = #{id}
+	</select>
+
+	<select id="loadByUuid" parameterType="java.lang.String" resultMap="XxlApiMock">
+		SELECT <include refid="Base_Column_List" />
+		FROM api_mock AS t
+		WHERE t.uuid = #{uuid}
+	</select>
+	
+	<select id="loadByUri" parameterType="java.lang.String" resultMap="XxlApiMock">
+		SELECT <include refid="Base_Column_List" />
+		FROM api_mock AS t
+		WHERE t.req_uri = #{reqUri}
+		order by t.isdefault,t.id desc
+		limit 1 offset 0
+	</select>
+
+</mapper>

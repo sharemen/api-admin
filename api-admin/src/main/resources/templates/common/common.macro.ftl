@@ -139,7 +139,7 @@
 	<footer class="main-footer">
         Powered by <b>XXL-API</b>
 		<div class="pull-right hidden-xs">
-            <strong>Copyright &copy; 2015-${.now?string('yyyy')} &nbsp;明觉科技有限公司
+            <strong>Copyright &copy; 2015-${.now?string('yyyy')} &nbsp;https://github.com/sharemen
             </strong><!-- All rights reserved. -->
 		</div>
 	</footer>

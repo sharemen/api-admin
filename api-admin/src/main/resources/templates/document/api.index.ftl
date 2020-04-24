@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  	<title>明觉API</title>
+  	<title>API</title>
     <link rel="shortcut icon" href="${request.contextPath}/static/favicon.ico" type="image/x-icon" />
   	<#import "../common/common.macro.ftl" as netCommon>
 	<@netCommon.commonStyle />

@@ -9,7 +9,7 @@
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<a><b>MJ</b>API</a>
+			<a><b>APIAdmin</b></a>
 		</div>
 		
 			<div class="login-box-body">

@@ -57,7 +57,7 @@ public class WikiService {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
-	private boolean  enableSyncWiki() {
+	public boolean  enableSyncWiki() {
 		return "1".equals(enableSyncWiki);
 	}
 	

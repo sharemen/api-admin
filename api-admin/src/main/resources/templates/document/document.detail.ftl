@@ -355,7 +355,7 @@
                 <#--Mock数据-->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Mock数据</h3> <a href="${request.contextPath}/mock/run${document.requestUrl}" target="_blank">点击查看默认mock数据</a>
+                        <h3 class="box-title">Mock数据</h3> <a href="${request.contextPath}/mock/run/${document.requestUrl}" target="_blank">点击查看默认mock数据</a>
                         <#if hasBizPermission>
                         <div class="box-tools pull-right">
                             <button class="btn btn-info btn-xs" type="button" id="addMock" >+ Mock数据</button>

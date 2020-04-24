@@ -105,30 +105,25 @@ public class XxlApiMockController {
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 
-	@RequestMapping("/run/{uuid}")
-	@PermessionLimit(limit=false)
-	public void run(@PathVariable("uuid") String uuid, HttpServletRequest request, HttpServletResponse response) {
-		XxlApiMock xxlApiMock = xxlApiMockDao.loadByUuid(uuid);
-		if (xxlApiMock == null) {
-			throw new RuntimeException("Mock数据ID非法");
-		}
-
-		RequestConfig.ResponseContentType contentType = RequestConfig.ResponseContentType.match(xxlApiMock.getRespType());
-		if (contentType == null) {
-			throw new RuntimeException("Mock数据响应数据类型(MIME)非法");
-		}
-
-		// write response
-		try {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType(contentType.type);
-
-			PrintWriter writer = response.getWriter();
-			writer.write(xxlApiMock.getRespExample());
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-	}
+	/*
+	 * @RequestMapping("/run/{uuid}")
+	 * 
+	 * @PermessionLimit(limit=false) public void run(@PathVariable("uuid") String
+	 * uuid, HttpServletRequest request, HttpServletResponse response) { XxlApiMock
+	 * xxlApiMock = xxlApiMockDao.loadByUuid(uuid); if (xxlApiMock == null) { throw
+	 * new RuntimeException("Mock数据ID非法"); }
+	 * 
+	 * RequestConfig.ResponseContentType contentType =
+	 * RequestConfig.ResponseContentType.match(xxlApiMock.getRespType()); if
+	 * (contentType == null) { throw new RuntimeException("Mock数据响应数据类型(MIME)非法"); }
+	 * 
+	 * // write response try { response.setCharacterEncoding("UTF-8");
+	 * response.setContentType(contentType.type);
+	 * 
+	 * PrintWriter writer = response.getWriter();
+	 * writer.write(xxlApiMock.getRespExample()); } catch (Exception e) {
+	 * logger.error(e.getMessage(), e); } }
+	 */
 	
 	@RequestMapping("/run/**")
 	@PermessionLimit(limit=false)
@@ -155,6 +150,10 @@ public class XxlApiMockController {
 	    }
 	    //其次匹配uri
 	    if(xxlApiMock == null) {
+	    	//去掉第一个 '/' 数据库里面保存的URL不包含'/'
+	    	if(uri.startsWith("/")) {
+	    		uri = uri.substring(1);
+	    	}
 	        xxlApiMock = xxlApiMockDao.loadByUri(uri);
 	    }
 		if (xxlApiMock == null) {

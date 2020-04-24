@@ -61,11 +61,11 @@ public class XxlApiDocumentController {
 	private LoginService loginService;
 	
 	//访问wiki系统host
-	@Value("${org.s.apiadmin.wikihost:https://de-wiki.dataenlighten.com}")
+	@Value("${org.s.apiadmin.wikihost:https://wiki.xxxxx.com}")
 	private  String wikihost;
 	
 	//访问wiki系统的用户名
-	@Value("${org.s.apiadmin.wikiuser:mjopenapi}")
+	@Value("${org.s.apiadmin.wikiuser:}")
 	private String username;
 	
 	//是否允许自动生成API 的wiki文档 0 不允许 ，1 允许
@@ -301,6 +301,11 @@ public class XxlApiDocumentController {
 		xxlApiDocument.setStarLevel(oldVo.getStarLevel());
 		xxlApiDocument.setAddTime(oldVo.getAddTime());
 		xxlApiDocument.setCreatUser(oldVo.getCreatUser());
+		//没有开启wiki同步功能情况下，不改变API已有的wikiId的值
+		if(!wikiService.enableSyncWiki()) {
+			xxlApiDocument.setWikiId(oldVo.getWikiId());
+		}
+		
 		//获取当前用户
 		XxlApiUser loginUser = loginService.ifLogin(request);
 		//设置接口操作人
@@ -312,6 +317,7 @@ public class XxlApiDocumentController {
 		
 		//触发同步wiki生成api文档
 		if(ret > 0) {
+			
 			//获取最新数据
 			xxlApiDocument = xxlApiDocumentDao.load(xxlApiDocument.getId());
 			WikiResult wikiResult = wikiService.saveOrUpdateWiki(xxlApiDocument);

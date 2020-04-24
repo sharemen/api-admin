@@ -13,3 +13,5 @@
 6. 增加对于Apollo配置中心的接入支持（配置可选）
 7. 增加API自动生成wiki文档的支持 Atlassian Confluence,并可以通过改resources/templates/wiki/api.wikitemplate.ftl来调整生成格式（配置可选）
 8. 一些用户体验细节上的调整
+
+使用说明：https://my.oschina.net/u/4235100/blog/3769907

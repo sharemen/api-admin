@@ -294,12 +294,15 @@ $(function() {
 			}
 			var queryParams = JSON.stringify(queryParamList);
 			
-			var wikiId = 0;
+			var wikiId ;
 			
 			if($('#wikiurl')!=null && $('#wikiurl').val()!=''){
 				wikiId = getUrlParamByUrl($('#wikiurl').val(),'pageId');
 			}
 			
+			if(wikiId == '' || wikiId == null){
+				wikiId = 0;
+			}
 
 			// response params
 			var responseParamList = new Array();
